@@ -6,7 +6,7 @@ import { Arrow, Flex, Icon, SmartLink, Text } from '.';
 import styles from './Badge.module.scss'
 import classNames from 'classnames';
 
-interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
+interface BadgeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'ref'> {
     title?: string;
     icon?: string;
     arrow?: boolean;
@@ -60,13 +60,14 @@ const Badge = forwardRef<HTMLDivElement | HTMLAnchorElement, BadgeProps>(({
     };
 
     if (href) {
+        const { onClick, onToggle, ...anchorProps } = props;
         return (
             <SmartLink
                 unstyled
                 style={{borderRadius: 'var(--radius-full)'}}
                 href={href}
                 ref={ref as React.Ref<HTMLAnchorElement>}
-                {...props as React.AnchorHTMLAttributes<HTMLAnchorElement>}>
+                {...(anchorProps as React.AnchorHTMLAttributes<HTMLAnchorElement>)}>
                 <Flex {...commonProps}/>
             </SmartLink>
         );
